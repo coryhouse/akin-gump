@@ -12,6 +12,7 @@ function Input(props) {
         onChange={props.onChange}
         value={props.value}
       ></input>
+      {props.error && <div style={{ color: "red" }}>{props.error}</div>}
     </div>
   );
 }
