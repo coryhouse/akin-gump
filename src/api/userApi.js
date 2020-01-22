@@ -7,6 +7,12 @@ export async function getUsers() {
   throw new Error("Bad network response.");
 }
 
+export async function getUser(id) {
+  const response = await fetch("http://localhost:3001/users/" + id);
+  if (response.ok) return await response.json();
+  throw new Error("Bad network response.");
+}
+
 export async function deleteUser(id) {
   const response = await fetch(`http://localhost:3001/users/${id}`, {
     method: "DELETE"
@@ -15,9 +21,12 @@ export async function deleteUser(id) {
   throw new Error("Bad network response.");
 }
 
-export async function addUser(user) {
-  const response = await fetch(`http://localhost:3001/users`, {
-    method: "POST",
+export async function saveUser(user) {
+  const url = user.id
+    ? `http://localhost:3001/users/${user.id}`
+    : `http://localhost:3001/users`;
+  const response = await fetch(url, {
+    method: user.id ? "PUT" : "POST",
     headers: {
       "Content-Type": "application/json"
     },

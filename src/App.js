@@ -20,7 +20,7 @@ function App() {
       </NavLink>
       <Route path="/" component={Home} exact />
       <Route path="/users" component={Users} />
-      <Route path="/manage-user" component={ManageUser} />
+      <Route path="/manage-user/:id?" component={ManageUser} />
     </>
   );
 }

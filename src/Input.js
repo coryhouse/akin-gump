@@ -1,20 +1,30 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-function Input(props) {
+function Input({ id, label, name, onChange, value, error }) {
   return (
     <div>
-      <label htmlFor={props.id}>{props.label}</label>
+      <label htmlFor={id}>{label}</label>
       <br />
       <input
-        id={props.id}
+        id={id}
         type="text"
-        name={props.name}
-        onChange={props.onChange}
-        value={props.value}
+        name={name}
+        onChange={onChange}
+        value={value}
       ></input>
-      {props.error && <div style={{ color: "red" }}>{props.error}</div>}
+      {error && <div style={{ color: "red" }}>{error}</div>}
     </div>
   );
 }
+
+Input.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  error: PropTypes.string
+};
 
 export default Input;

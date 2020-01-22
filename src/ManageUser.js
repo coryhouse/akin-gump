@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as userApi from "./api/userApi";
 import Input from "./Input";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 const emptyUser = {
   name: "",
@@ -13,6 +13,19 @@ function ManageUser() {
   const [user, setUser] = useState(emptyUser);
   const [errors, setErrors] = useState({});
   const history = useHistory();
+  const match = useRouteMatch();
+
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const _user = await userApi.getUser(match.params.id);
+        setUser(_user);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (match.params.id) getUser();
+  }, [match.params.id]);
 
   function isValid() {
     const _errors = {};
@@ -28,7 +41,7 @@ function ManageUser() {
     event.preventDefault();
     if (!isValid()) return;
     try {
-      await userApi.addUser(user);
+      await userApi.saveUser(user);
       history.push("/users");
     } catch (error) {
       console.error(error);
